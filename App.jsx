@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   StyleSheet, 
   Text,
@@ -6,11 +6,11 @@ import {
   Pressable
 } from 'react-native';
 
+import Formulario from './src/components/Formulario';
+
 const App = () => {
 
-  const nuevaCitaHandler = () => {
-    console.log('Diste click');
-  }
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -19,11 +19,14 @@ const App = () => {
         <Text style={styles.tituloBold}>Veterinaria</Text>
       </Text>
       <Pressable
-        onPress={nuevaCitaHandler}
+        onPress={() => setModalVisible(true)}
         style={styles.btnNuevaCita}
       >
         <Text style={styles.btnTextoNuevaCita}>Nueva Cita</Text>
       </Pressable>
+      <Formulario
+        modalVisible={modalVisible}
+      />
     </View>
   );
 }
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
     padding:15,
     marginTop:20,
     marginHorizontal:20,
-    borderRadius:10
+    borderRadius:10,
   },
   btnTextoNuevaCita:{
     textAlign:'center',
