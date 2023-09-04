@@ -5,10 +5,12 @@ import {
   View,
   Pressable,
   FlatList,
-  Alert
+  Alert,
+  Modal
 } from 'react-native';
 
 import Formulario from './src/components/Formulario';
+import InformacionPaciente from './src/components/InformacionPaciente';
 import Paciente from './src/components/Paciente';
 
 const App = () => {
@@ -16,6 +18,7 @@ const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [pacientes, setPacientes] = useState([]);
   const [paciente, setPaciente] = useState({});
+  const [modalPaciente, setModalPaciente] = useState(false);
 
   const pacienteEditar = id => {
     const pacienteEditar = pacientes.filter(pacienteState => pacienteState.id === id);
@@ -31,6 +34,10 @@ const App = () => {
         setPacientes(pacientesActualizados);
       }}]
     );
+  }
+
+  const cerrarModal = () => {
+    setModalVisible(false);
   }
 
   return (
@@ -59,20 +66,34 @@ const App = () => {
                 setModalVisible={setModalVisible}
                 pacienteEditar={pacienteEditar}
                 pacienteEliminar={pacienteEliminar}
+                setModalPaciente={setModalPaciente}
+                setPaciente={setPaciente}
               />
             );
           }}
         />
       }
 
-      <Formulario
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        pacientes={pacientes}
-        setPacientes={setPacientes}
-        paciente={paciente}
-        setPaciente={setPaciente}
-      />
+      { modalVisible && (
+        <Formulario
+          cerrarModal={cerrarModal}
+          pacientes={pacientes}
+          setPacientes={setPacientes}
+          paciente={paciente}
+          setPaciente={setPaciente}
+        />
+      ) }
+
+      <Modal
+        animationType='slide'
+        visible={modalPaciente}
+      >
+        <InformacionPaciente
+          paciente={paciente}
+          setModalPaciente={setModalPaciente}
+          setPaciente={setPaciente}
+        />
+      </Modal>
     </View>
   );
 }

@@ -11,7 +11,14 @@ import {
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 
-const Formulario = ({ modalVisible, setModalVisible, pacientes, setPacientes, paciente:pacienteObj, setPaciente:setPacienteApp }) => {
+const Formulario = ({
+  modalVisible, 
+  cerrarModal, 
+  pacientes, 
+  setPacientes, 
+  paciente:pacienteObj, 
+  setPaciente:setPacienteApp
+}) => {
 
   const [id, setId] = useState('');
   const [paciente, setPaciente] = useState('');
@@ -61,7 +68,7 @@ const Formulario = ({ modalVisible, setModalVisible, pacientes, setPacientes, pa
       setPacientes([...pacientes, nuevoPaciente]);
     }
 
-    setModalVisible(false);
+    cerrarModal()
     setId('');
     setPaciente('');
     setPropietario('');
@@ -85,7 +92,7 @@ const Formulario = ({ modalVisible, setModalVisible, pacientes, setPacientes, pa
           <Pressable 
             style={styles.btnCancelar}
             onPress={() => {
-              setModalVisible(false);
+              cerrarModal();
               setPacienteApp({});
               setId({});
               setPaciente('');
@@ -245,4 +252,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Formulario
+export default Formulario;
